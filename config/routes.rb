@@ -10,6 +10,8 @@ Rails.application.routes.draw do
           post 'search'
         end
       end
+
+      resources :countries
     end
   end
 end
