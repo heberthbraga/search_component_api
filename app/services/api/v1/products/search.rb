@@ -46,7 +46,7 @@ private
       price_option = aggregation[:price_option]
       if price_option.present?
 
-        price_range = price_ranges[price_option]
+        price_range = price_ranges[price_option.last]
         filters[:price] = { gte: price_range[:from], lte: price_range[:to] }
 
         aggs << :price
