@@ -5,20 +5,12 @@ application up and running.
 
 Things you may want to cover:
 
-* Ruby version
+* Install Elasticsearch on your local machine
 
-* System dependencies
+* Create and configure a postgres database. Please refer to database.yml
 
-* Configuration
+* Create a .env file and set the configuration needed for the database
 
 * Database creation
 
 * Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
