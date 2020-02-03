@@ -13,9 +13,13 @@ describe Api::V1::ProductsController, type: :request do
         post '/api/v1/products/search', params: {text: 'Asics'}
   
         response = json_response
-  
+
         expect(response).not_to be_nil
-        expect(response.size).to eq 3
+
+        data = response[:data]
+
+        expect(data).not_to be_nil
+        expect(data.size).to eq 3
       end
     end
 
@@ -32,7 +36,12 @@ describe Api::V1::ProductsController, type: :request do
         response = json_response
   
         expect(response).not_to be_nil
-        expect(response.size).to eq 5
+
+        data = response[:data]
+
+        expect(data).not_to be_nil
+
+        expect(data.size).to eq 3
       end
     end
 
@@ -47,9 +56,11 @@ describe Api::V1::ProductsController, type: :request do
         post '/api/v1/products/search', params: {text: 'hal 9000'}
   
         response = json_response
-  
-        expect(response).not_to be_nil
-        expect(response.size).to eq 0
+
+        data = response[:data]
+
+        expect(data).not_to be_nil
+        expect(data.size).to eq 0
       end
     end
 
@@ -69,9 +80,11 @@ describe Api::V1::ProductsController, type: :request do
         response = json_response
 
         expect(response).not_to be_nil
-        expect(response['errors']).not_to be_nil
-        expect(response['errors'].size).to eq 1
-        expect(response['errors'].first['title']).to eq 'Something went wrong'
+
+        errors = response[:errors]
+        expect(errors).not_to be_nil
+        expect(errors.size).to eq 1
+        expect(errors.first[:title]).to eq 'Something went wrong'
       end
     end
   end

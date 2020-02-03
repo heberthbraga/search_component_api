@@ -8,19 +8,19 @@ class Api::V1::Products::Search
     'highest' => { price: :desc }
   }
 
-  def initialize(text, aggregation={})
+  def initialize(text, aggregation, page)
     @text = text.present? ? text : '*'
     @aggregation = aggregation
+    @page = page
   end
 
   def call
-    Product.reindex
     Product.search(text, query)
   end
 
 private
 
-  attr_reader :text, :aggregation
+  attr_reader :text, :aggregation, :page
 
   def query
     filters, aggs = filtering
@@ -62,8 +62,8 @@ private
   end
 
   def pagination
-    page = aggregation[:page]
-    page.present? ? { page: page, per_page: 3 } : {}
+    current_page = page || 1
+    { page: current_page , per_page: 3 }
   end
 
   def price_ranges

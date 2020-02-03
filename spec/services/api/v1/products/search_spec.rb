@@ -98,7 +98,7 @@ describe Api::V1::Products::Search, type: :service do
         products = command.result
 
         expect(products).not_to be_empty
-        expect(products.size).to eq 5
+        expect(products.size).to eq 3
         expect(products.first.price.to_f).to eq 50.00
       end
     end
@@ -110,7 +110,7 @@ describe Api::V1::Products::Search, type: :service do
         products = command.result
 
         expect(products).not_to be_empty
-        expect(products.size).to eq 5
+        expect(products.size).to eq 3
         expect(products.first.price.to_f).to eq 320.99
       end
     end

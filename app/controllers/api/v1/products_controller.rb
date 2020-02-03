@@ -7,12 +7,17 @@ class Api::V1::ProductsController < ApplicationController
 
   def search
     aggregation = params[:aggregation] || {}
-    search_command = Api::V1::Products::Search.call params[:text], aggregation
+    page = params[:page]
+    search_command = Api::V1::Products::Search.call params[:text], aggregation, page
 
     if search_command.success?
+      search_result = search_command.result
       products = search_command.result.results
 
-      render json: products
+      options = {}
+      options[:meta] = Pagination.new(search_result).to_hash
+
+      render json: ProductSerializer.new(products, options)
     else
       render json: { error: search_command.errors }, status: :internal_server_error
     end

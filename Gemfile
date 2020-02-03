@@ -33,6 +33,8 @@ gem 'searchkick'
 
 gem 'oj'
 
+gem 'fast_jsonapi'
+
 group :local, :development, :test  do
   gem 'dotenv-rails'
 end
