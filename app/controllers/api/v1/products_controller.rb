@@ -7,7 +7,7 @@ class Api::V1::ProductsController < ApplicationController
 
   def search
     aggregation = params[:aggregation] || {}
-    page = params[:page]
+    page = params[:page] || 1
     search_command = Api::V1::Products::Search.call params[:text], aggregation, page
 
     if search_command.success?

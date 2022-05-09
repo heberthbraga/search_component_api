@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 describe Api::V1::Products::Search, type: :service do
+  let(:page) { 1 }
+
   before do
     create_products
     Product.search_index.refresh
@@ -8,7 +10,7 @@ describe Api::V1::Products::Search, type: :service do
 
   context 'when searching for a given word' do
     it 'returns a list of the target products' do
-      command = described_class.call 'Asics'
+      command = described_class.call 'Asics', {}, page
 
       products = command.result
 
@@ -20,7 +22,7 @@ describe Api::V1::Products::Search, type: :service do
   context 'when filtering by country' do
     context 'US' do
       it 'returns a list of the target products' do
-        command = described_class.call 'Asics', { country_code: 'US' }
+        command = described_class.call 'Asics', { country_code: 'US' }, page
 
         products = command.result
   
@@ -31,7 +33,7 @@ describe Api::V1::Products::Search, type: :service do
 
     context 'CA' do
       it 'returns a list of the target products' do
-        command = described_class.call 'Asics', { country_code: 'CA' }
+        command = described_class.call 'Asics', { country_code: 'CA' }, page
   
         products = command.result
   
@@ -44,7 +46,7 @@ describe Api::V1::Products::Search, type: :service do
   context 'when filtering by price' do
     context 'range option: 0 to 50.00' do
       it 'returns the filtered products' do
-        command = described_class.call 'Asics', { price_option: '1' }
+        command = described_class.call 'Asics', { price_option: '1' }, page
 
         products = command.result
     
@@ -56,7 +58,7 @@ describe Api::V1::Products::Search, type: :service do
 
     context 'range option: 50.00 to 200.00' do
       it 'returns the filtered products' do
-        command = described_class.call 'Asics', { price_option: '2' }
+        command = described_class.call 'Asics', { price_option: '2' }, page
 
         products = command.result
     
@@ -67,7 +69,7 @@ describe Api::V1::Products::Search, type: :service do
 
     context 'range option: 200.00 to ...' do
       it 'returns the filtered products' do
-        command = described_class.call 'Asics', { price_option: '3' }
+        command = described_class.call 'Asics', { price_option: '3' }, page
 
         products = command.result
     
@@ -81,7 +83,7 @@ describe Api::V1::Products::Search, type: :service do
   context 'when sorting by' do
     context 'newest' do
       it 'returns the ordered products' do
-        command = described_class.call 'Asics', { sort_option: 'newest' }
+        command = described_class.call 'Asics', { sort_option: 'newest' }, page
 
         products = command.result
 
@@ -93,7 +95,7 @@ describe Api::V1::Products::Search, type: :service do
 
     context 'lowest price' do
       it 'returns the ordered products' do
-        command = described_class.call '*', { sort_option: 'lowest' }
+        command = described_class.call '*', { sort_option: 'lowest' }, page
 
         products = command.result
 
@@ -105,7 +107,7 @@ describe Api::V1::Products::Search, type: :service do
 
     context 'highest price' do
       it 'returns the ordered products' do
-        command = described_class.call '*', { sort_option: 'highest' }
+        command = described_class.call '*', { sort_option: 'highest' }, page
 
         products = command.result
 

@@ -15,7 +15,7 @@ class Api::V1::Products::Search
   end
 
   def call
-    Product.search(text, query)
+    Product.search(text, **query)
   end
 
 private
